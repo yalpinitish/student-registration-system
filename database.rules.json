@@ -1,0 +1,61 @@
+
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "students": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+
+        ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.exists()",
+
+        ".validate": "newData.hasChildren(['uid', 'fullName', 'rollNumber', 'email', 'phone', 'dob', 'gender', 'department', 'year', 'createdAt'])",
+
+        "uid": {
+          ".validate": "newData.isString() && newData.val() === $uid"
+        },
+
+        "fullName": {
+          ".validate": "newData.isString() && newData.val().length >= 2"
+        },
+
+        "rollNumber": {
+          ".validate": "newData.isString()"
+        },
+
+        "email": {
+          ".validate": "newData.isString() && newData.val() === auth.token.email"
+        },
+
+        "phone": {
+          ".validate": "newData.isString()"
+        },
+
+        "dob": {
+          ".validate": "newData.isString()"
+        },
+
+        "gender": {
+          ".validate": "newData.isString()"
+        },
+
+        "department": {
+          ".validate": "newData.isString()"
+        },
+
+        "year": {
+          ".validate": "newData.isNumber() || newData.isString()"
+        },
+
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}
